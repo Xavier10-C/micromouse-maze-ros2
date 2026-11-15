@@ -125,7 +125,8 @@ micromouse_maze/
 
 `/odom` 由 gazebo_ros_diff_drive 插件按世界坐标发布（初始值即 spawn 位姿），
 因此格心判据、航向闭环与出口判定全部使用世界坐标：
-出口判据为 y > 1.75 m（外墙内表面）。
+出口判据为**从终点格心沿北向再走 0.55 m**（到位容差 0.05 m，约 y ≈ 1.95 m，
+外墙内表面在 y = 1.75 m，故越过即说明车已在迷宫外）。
 
 核心参数（`config/params.yaml` 的 `left_wall_follower` 段）：
 `v_nom 0.28 m/s`、`turn_w 1.45 rad/s`、`wall_th 0.55 m`、
