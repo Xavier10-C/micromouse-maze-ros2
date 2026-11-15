@@ -176,7 +176,7 @@ AI 工具仅用于：辅助生成 Python 代码骨架、报告文字润色、示
 
 ## 9. 开源仓库
 
-本仓库：`https://github.com/<用户名>/micromouse-maze-ros2`（上传后把此行替换为真实地址）
+本仓库：<https://github.com/Xavier10-C/micromouse-maze-ros2>
 
 课程：《机器人感知与控制综合实践》 (2026-2027-1)-S0610350-01 方向 1「地老鼠走迷宫」
 
