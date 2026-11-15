@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 机器人感知与控制综合实践 —— 地老鼠网格迷宫（maze_model.py 自动生成，请勿手改）
+     5x5 格，单元 0.70 m，墙厚 0.04 m，墙高 0.45 m；
+     内部墙 25 段，死胡同 5 个，环路 1 个。
+     入口：单元 (0, 0) 南墙缺口；出口：单元 (4, 4) 北墙缺口。 -->
+<sdf version="1.6">
+  <world name="maze_world">
+    <include><uri>model://sun</uri></include>
+    <include><uri>model://ground_plane</uri></include>
+    <gravity>0 0 -9.8</gravity>
+    <physics name="default_physics" default="0" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <!-- 固定初始相机：俯视偏前，整座迷宫与小车都在画面内 -->
+    <gui fullscreen="0">
+      <camera name="user_camera">
+        <pose>0 -4.300 4.400 0 0.780 1.5708</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+    <scene><ambient>0.75 0.75 0.75 1</ambient><background>0.88 0.91 0.95 1</background>
+      <shadows>false</shadows></scene>
+
+    <!-- 起点（蓝）/ 终点（绿）地面标识，仅视觉无碰撞 -->
+    <model name="start_mark"><static>true</static><link name="m">
+      <visual name="v"><pose>-1.400 -1.400 0.004 0 0 0</pose>
+        <geometry><box><size>0.62 0.62 0.008</size></box></geometry>
+        <material><ambient>0.15 0.45 0.90 1</ambient><diffuse>0.18 0.50 0.95 1</diffuse></material></visual>
+    </link></model>
+    <model name="goal_mark"><static>true</static><link name="m">
+      <visual name="v"><pose>1.400 1.400 0.004 0 0 0</pose>
+        <geometry><box><size>0.62 0.62 0.008</size></box></geometry>
+        <material><ambient>0.12 0.72 0.30 1</ambient><diffuse>0.15 0.78 0.34 1</diffuse></material></visual>
+    </link></model>
+
+    <model name="maze_walls"><static>true</static><pose>0 0 0 0 0 0</pose>
+      <link name="walls_link">
+      <collision name="c0">
+        <pose>-1.0500 -0.7000 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 0.7000 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v0">
+        <pose>-1.0500 -0.7000 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 0.7000 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c1">
+        <pose>-0.3500 0.3500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 1.4000 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v1">
+        <pose>-0.3500 0.3500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 1.4000 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c2">
+        <pose>0.3500 -1.0500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 1.4000 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v2">
+        <pose>0.3500 -1.0500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 1.4000 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c3">
+        <pose>0.3500 1.4000 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 0.7000 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v3">
+        <pose>0.3500 1.4000 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 0.7000 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c4">
+        <pose>1.0500 -0.7000 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 0.7000 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v4">
+        <pose>1.0500 -0.7000 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 0.7000 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c5">
+        <pose>-1.0500 -1.0500 0.2250 0 0 0</pose>
+        <geometry><box><size>1.4000 0.0400 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v5">
+        <pose>-1.0500 -1.0500 0.2250 0 0 0</pose>
+        <geometry><box><size>1.4000 0.0400 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c6">
+        <pose>0.0000 -0.3500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.7000 0.0400 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v6">
+        <pose>0.0000 -0.3500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.7000 0.0400 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c7">
+        <pose>1.4000 -0.3500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.7000 0.0400 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v7">
+        <pose>1.4000 -0.3500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.7000 0.0400 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c8">
+        <pose>0.0000 0.3500 0.2250 0 0 0</pose>
+        <geometry><box><size>2.1000 0.0400 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v8">
+        <pose>0.0000 0.3500 0.2250 0 0 0</pose>
+        <geometry><box><size>2.1000 0.0400 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c9">
+        <pose>-1.4000 1.0500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.7000 0.0400 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v9">
+        <pose>-1.4000 1.0500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.7000 0.0400 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c10">
+        <pose>0.7000 1.0500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.7000 0.0400 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v10">
+        <pose>0.7000 1.0500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.7000 0.0400 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c11">
+        <pose>-1.7600 -1.7500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0200 0.0400 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v11">
+        <pose>-1.7600 -1.7500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0200 0.0400 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c12">
+        <pose>0.3600 -1.7500 0.2250 0 0 0</pose>
+        <geometry><box><size>2.8200 0.0400 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v12">
+        <pose>0.3600 -1.7500 0.2250 0 0 0</pose>
+        <geometry><box><size>2.8200 0.0400 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c13">
+        <pose>-0.3600 1.7500 0.2250 0 0 0</pose>
+        <geometry><box><size>2.8200 0.0400 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v13">
+        <pose>-0.3600 1.7500 0.2250 0 0 0</pose>
+        <geometry><box><size>2.8200 0.0400 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c14">
+        <pose>1.7600 1.7500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0200 0.0400 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v14">
+        <pose>1.7600 1.7500 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0200 0.0400 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c15">
+        <pose>-1.7500 0.0000 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 3.5000 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v15">
+        <pose>-1.7500 0.0000 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 3.5000 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      <collision name="c16">
+        <pose>1.7500 0.0000 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 3.5000 0.450</size></box></geometry>
+        <surface><friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          <bounce><restitution_factor>0.0</restitution_factor></bounce></surface>
+      </collision>
+      <visual name="v16">
+        <pose>1.7500 0.0000 0.2250 0 0 0</pose>
+        <geometry><box><size>0.0400 3.5000 0.450</size></box></geometry>
+        <material><ambient>0.80 0.82 0.86 1</ambient><diffuse>0.88 0.90 0.94 1</diffuse>
+          <specular>0.04 0.04 0.04 1</specular></material>
+      </visual>
+      </link>
+    </model>
+  </world>
+</sdf>

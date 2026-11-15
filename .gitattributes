@@ -1,0 +1,5 @@
+# 统一换行：仓库内一律 LF，避免在 Windows 下编辑后 launch/脚本在 Linux 上出问题
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary

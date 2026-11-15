@@ -1,0 +1,78 @@
+# 算法节点参数（由 maze_sim.launch.py 通过 params 参数加载）
+# 迷宫：5x5 格，单元 0.60 m，墙厚 0.04 m，外墙内表面到原点 1.50 m
+# 格心坐标 = -1.2 / -0.6 / 0 / 0.6 / 1.2；起点 (-1.2, -1.2) 朝北，出口北墙 x=+1.2 缺口
+
+scan_zones:
+  ros__parameters:
+    use_sim_time: true
+    print_every: 10          # 每 10 帧（约 1 s）打印一次分区距离
+
+trajectory_recorder:
+  ros__parameters:
+    use_sim_time: true
+    output: /home/zyy/ros2_ws/trajectory.csv
+    sample_period: 0.05
+
+open_loop_drive:
+  ros__parameters:
+    use_sim_time: true
+    linear_speed: 0.15       # 开环直行速度 (m/s)
+    angular_speed: 0.60      # 开环原地转向角速度 (rad/s)
+    straight_time: 3.0       # 直行时长 (s) -> 约 0.45 m
+
+odom_p_controller:
+  ros__parameters:
+    use_sim_time: true
+    # 世界坐标航点序列 [x1,y1, x2,y2, ...]：沿底部通道东行后北折，全部落在通道中心线上
+    waypoints: [-1.40, -1.40,
+                -0.70, -1.40,
+                 0.00, -1.40,
+                 0.00, -0.70,
+                -0.70, -0.70,
+                -0.70,  0.00]
+    kp_linear: 0.45
+    kp_angular: 1.60
+    v_max: 0.20
+    w_max: 1.00
+    goal_tol: 0.03
+
+reactive_avoid:
+  ros__parameters:
+    use_sim_time: true
+    stop_dist: 0.45          # 前方小于该距离即判定障碍
+    clear_dist: 0.80         # 转向后前方大于该距离认为可通行
+    cruise_speed: 0.15
+    turn_speed: 0.85
+
+left_wall_follower:
+  ros__parameters:
+    use_sim_time: true
+    grid_n: 5                # 每边单元数
+    cell: 0.70               # 单元边长 = 通道宽度 (m)
+    half: 1.75               # 外墙内表面到原点距离 (m)
+    v_nom: 0.28              # 通道巡航速度 (m/s)
+    v_slow: 0.09             # 接近格心 / 刚出转弯的慢速
+    w_max: 1.20              # 角速度上限 (rad/s)
+    turn_w: 1.45             # 格心原地转向角速度 (rad/s)
+    kp_head: 2.00            # 航向环比例增益
+    kp_lat: 1.20             # 通道居中（左右等距）比例增益
+    lat_gain: 0.45           # 居中修正注入比例
+    wall_th: 0.55            # 判定"该方向有墙"的距离阈值 (m)
+    arrive_tol: 0.04         # 到达格心判据 (m)
+    slow_dist: 0.30          # 进入降速区的距离 (m)
+    timeout: 180.0           # 超时保护 (s)
+
+pure_pursuit:
+  ros__parameters:
+    use_sim_time: true
+    # 与 P 控制相同的通道折线，用纯追踪做连续平滑跟踪（拓展项）
+    path: [-1.40, -1.40,
+           -0.70, -1.40,
+            0.00, -1.40,
+            0.00, -0.70,
+           -0.70, -0.70,
+           -0.70,  0.00]
+    lookahead: 0.35          # 前视距离 (m)，窄通道必须小于单元边长
+    speed: 0.18
+    w_max: 1.20
+    goal_tol: 0.12
