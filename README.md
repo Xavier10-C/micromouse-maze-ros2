@@ -24,6 +24,20 @@
 
 ---
 
+## 作者与模块分工
+
+本组 1 人，全部模块由本人独立完成（课程：《机器人感知与控制综合实践》(2026-2027-1)-S0610350-01 方向 1）。
+
+| 模块 | 负责内容 | 对应文件 |
+| --- | --- | --- |
+| 建模与仿真环境 | URDF、maze.world、launch、RViz 配置、colcon 编译 | `urdf/`、`worlds/`、`launch/`、`rviz/`、`setup.py` |
+| 感知 | `/scan` 分区、三项最小距离、反应式避障、阈值整定 | `scan_zones.py`、`reactive_avoid.py` |
+| 运动控制 | 开环运动、里程计 P 控制、航点序列、纯追踪（拓展） | `open_loop_drive.py`、`odom_p_controller.py`、`pure_pursuit.py` |
+| 决策 | 左手法则状态机、出口判定、速度自适应 | `left_hand_core.py`、`left_wall_follower.py` |
+| 实验与文档 | 批量实验、证据采集、报告与演示视频 | `trajectory_recorder.py`、`tools/` |
+
+---
+
 ## 1. 环境版本
 
 | 项目 | 版本 |
